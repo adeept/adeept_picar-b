@@ -1,0 +1,40 @@
+Instruction：
+
+Shortcut keys:
+W - forward
+S - backward
+A - turn left
+D - turn right
+
+H - servo returns to initial position.
+
+U(CV Run) - When turned on, the OpenCV function can control the rotation of the motor and maintain a certain distance from the target point by ultrasonic ranging.
+O(SpeechR) - Speech recognition.Due to the limitation of the ports of PWM output, this function is off by default. After the voice recognition function is turned on, the ws2812 LED bar cannot change color due to the PWM signal frequency.       Enable speech recognition: change the SR_dect = 0 to SR = 1 of line 25
+of (PATH)/server/server.py in Raspberry Pi.
+
+I - look up
+K - look down
+J - look to the left
+L - look to the right
+
+After successfully connecting to the robot using the GUI, the IP address of the robot will be saved in the IP.txt in the client folder of the PC. The next time you run the GUI, you do not need to fill in the IP address. Just press Enter to connect.
+
+The mobile APP control function is enabled by default. Connect the IP address of the Raspberry Pi when using.The port number is 10123.
+Turn off mobile APP control function: change appConnection = 0 to appConnection = 1 of line 26 of（PATH）/server/server.py in Raspberry Pi.
+
+When using mobile phone control, the control method is slightly different from the GUI of the PC because usually only one button can be pressed at the same time.
+For example: to use the phone to control the car to turn left, you need to press the forward button, then press the left-turn button; to use the phone to control the car to go backward and turn right, you need to press the backward button,then press the right-turn button.
+
+The issue of failing to go straight:
+There is an inevitable mechanical error in the car which uses servos for steering. After the assembly is completed, the servo can be fine-tuned in the GUI interface (the three scales in the lower right corner). The result of the fine adjustment will be displayed immediately. After finishing the fine adjustment,you can press Save as Default to save the setting, so that next time when booting it will automatically initialize the servo according to the new servo initial position.
+
+Features:
+RadarScan - Ultrasound radar scanning and imaging.
+FindColor - OpencCV-based color searching and tracking function.Search for yellow target by default.You can change the target color according to your needs (line 65 and 66 of (PATH) / server / FPV.py).
+MotionGet - OpenCV-based moving object detection.
+LineTrack - Tracking function.
+Rainbow - LEDs Rainbow Change (source code from https://github.com/rpi-ws281x/rpi-ws281x-python) (This feature cannot be used simultaneously with speech recognition).
+Police - LEDs flash red and blue (this feature cannot be used simultaneously with speech recognition).
+Automatic - Ultrasonic-based obstacle avoidance mode.
+SteadyCam - MPU6050-based PT stabilization function.After this function is turned on, you can still control the PT movement to a certain elevation by controlling the buttons on the PT, then the PT will control the PWM2 servo to maintain the elevation through the MPU6050 degrees.
+The three scales of red, green and blue on the right are respectively used to control the LED color of red, green and blue,and the brightness.
