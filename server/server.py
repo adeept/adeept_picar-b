@@ -548,6 +548,51 @@ def run():
 			except:
 				pass
 
+		elif 'CVFL' in data:
+			if not FPV.FindLineMode:
+				FPV.FindLineMode = 1
+				tcpCliSock.send(('CVFL_on').encode())
+			else:
+				move.motorStop()
+				FPV.FindLineMode = 0
+				tcpCliSock.send(('CVFL_off').encode())
+
+		elif 'Render' in data:
+			if FPV.frameRender:
+				FPV.frameRender = 0
+			else:
+				FPV.frameRender = 1
+
+		elif 'WBswitch' in data:
+			if FPV.lineColorSet == 255:
+				FPV.lineColorSet = 0
+			else:
+				FPV.lineColorSet = 255
+
+		elif 'lip1' in data:
+			try:
+				set_lip1=data.split()
+				lip1_set = int(set_lip1[1])
+				FPV.linePos_1 = lip1_set
+			except:
+				pass
+
+		elif 'lip2' in data:
+			try:
+				set_lip2=data.split()
+				lip2_set = int(set_lip2[1])
+				FPV.linePos_2 = lip2_set
+			except:
+				pass
+
+		elif 'err' in data:
+			try:
+				set_err=data.split()
+				err_set = int(set_err[1])
+				FPV.findLineError = err_set
+			except:
+				pass
+
 		elif 'police' in data:
 			if LED.ledfunc != 'police':
 				tcpCliSock.send(('rainbow_off').encode())
@@ -649,10 +694,10 @@ if __name__ == '__main__':
 			tcpCliSock, addr = tcpSerSock.accept()
 			print('...connected from :', addr)
 
-			fpv=FPV.FPV()
-			fps_threading=threading.Thread(target=FPV_thread)		 #Define a thread for FPV and OpenCV
-			fps_threading.setDaemon(True)							 #'True' means it is a front thread,it would close when the mainloop() closes
-			fps_threading.start()									 #Thread starts
+			# fpv=FPV.FPV()
+			# fps_threading=threading.Thread(target=FPV_thread)		 #Define a thread for FPV and OpenCV
+			# fps_threading.setDaemon(True)							 #'True' means it is a front thread,it would close when the mainloop() closes
+			# fps_threading.start()									 #Thread starts
 			break
 		except:
 			led.colorWipe(0,0,0)
@@ -661,6 +706,10 @@ if __name__ == '__main__':
 			led.colorWipe(0,80,255)
 		except:
 			pass
+			fpv=FPV.FPV()
+	fps_threading=threading.Thread(target=FPV_thread)		 #Define a thread for FPV and OpenCV
+	fps_threading.setDaemon(True)							 #'True' means it is a front thread,it would close when the mainloop() closes
+	fps_threading.start()									 #Thread starts
 	run()
 	try:
 		run()
