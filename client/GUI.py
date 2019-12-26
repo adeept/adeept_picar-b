@@ -207,6 +207,14 @@ def connection_thread():
 			function_stu = 1
 			Btn_function_6.config(bg='#4CAF50')
 
+		elif 'CVFL_on' in car_info:
+			function_stu = 1
+			Btn_CVFL.config(bg='#4CAF50')
+
+		elif 'CVFL_off' in car_info:
+			function_stu = 0
+			Btn_CVFL.config(bg='#212121')
+
 		elif 'function_1_off' in car_info:
 			function_stu = 0
 			Btn_function_1.config(bg=color_btn)
@@ -666,6 +674,60 @@ def scale_PWM(x,y,w):
 	Btn_Save.bind('<ButtonPress-1>', call_Save)
 
 
+def scale_FL(x,y,w):
+	global Btn_CVFL
+	def lip1_send(event):
+		time.sleep(0.03)
+		tcpClicSock.send(('lip1 %s'%var_lip1.get()).encode())
+
+	def lip2_send(event):
+		time.sleep(0.03)
+		tcpClicSock.send(('lip2 %s'%var_lip2.get()).encode())
+
+	def err_send(event):
+		time.sleep(0.03)
+		tcpClicSock.send(('err %s'%var_err.get()).encode())
+
+	def call_Render(event):
+		tcpClicSock.send(('Render').encode())
+
+	def call_CVFL(event):
+		tcpClicSock.send(('CVFL').encode())
+
+	def call_WB(event):
+		tcpClicSock.send(('WBswitch').encode())
+
+	Scale_lip1 = tk.Scale(root,label=None,
+	from_=0,to=480,orient=tk.HORIZONTAL,length=w,
+	showvalue=1,tickinterval=None,resolution=1,variable=var_lip1,troughcolor='#212121',command=lip1_send,fg=color_text,bg=color_bg,highlightthickness=0)
+	Scale_lip1.place(x=x,y=y)							#Define a Scale and put it in position
+
+	Scale_lip2 = tk.Scale(root,label=None,
+	from_=0,to=480,orient=tk.HORIZONTAL,length=w,
+	showvalue=1,tickinterval=None,resolution=1,variable=var_lip2,troughcolor='#212121',command=lip2_send,fg=color_text,bg=color_bg,highlightthickness=0)
+	Scale_lip2.place(x=x,y=y+30)							#Define a Scale and put it in position
+
+	Scale_err = tk.Scale(root,label=None,
+	from_=0,to=200,orient=tk.HORIZONTAL,length=w,
+	showvalue=1,tickinterval=None,resolution=1,variable=var_err,troughcolor='#212121',command=err_send,fg=color_text,bg=color_bg,highlightthickness=0)
+	Scale_err.place(x=x,y=y+60)							#Define a Scale and put it in position
+
+	canvas_cover=tk.Canvas(root,bg=color_bg,height=30,width=510,highlightthickness=0)
+	canvas_cover.place(x=x,y=y+90)
+
+	Btn_Render = tk.Button(root, width=10, text='Render',fg=color_text,bg='#212121',relief='ridge')
+	Btn_Render.place(x=x+w+111,y=y+20)
+	Btn_Render.bind('<ButtonPress-1>', call_Render)
+
+	Btn_CVFL = tk.Button(root, width=10, text='CV FL',fg=color_text,bg='#212121',relief='ridge')
+	Btn_CVFL.place(x=x+w+21,y=y+20)
+	Btn_CVFL.bind('<ButtonPress-1>', call_CVFL)
+
+	Btn_WB = tk.Button(root, width=23, text='LineColorSwitch',fg=color_text,bg='#212121',relief='ridge')
+	Btn_WB.place(x=x+w+21,y=y+60)
+	Btn_WB.bind('<ButtonPress-1>', call_WB)
+
+
 def ultrasonic_radar(x,y):
 	x_range = 2
 	can_scan = tk.Canvas(root,bg=color_can,height=250,width=320,highlightthickness=0) #define a canvas
@@ -803,10 +865,10 @@ def function_buttons(x,y):
 
 
 def loop():
-	global root, var_Speed, var_R, var_G, var_B, var_0, var_1, var_2
+	global root, var_Speed, var_R, var_G, var_B, var_0, var_1, var_2, var_lip1, var_lip2, var_err
 	root = tk.Tk()			
 	root.title('PiCar-B v2.0 GUI')	  
-	root.geometry('565x570')  
+	root.geometry('565x670')  
 	root.config(bg=color_bg)  
 
 	var_Speed = tk.StringVar()
@@ -825,6 +887,13 @@ def loop():
 	var_1.set(300)
 	var_2 = tk.StringVar()
 	var_2.set(300)
+
+	var_lip1 = tk.StringVar()
+	var_lip1.set(440)
+	var_lip2 = tk.StringVar()
+	var_lip2.set(380)
+	var_err = tk.StringVar()
+	var_err.set(20)
 
 	try:
 		logo =tk.PhotoImage(file = 'logo.png')
@@ -852,6 +921,8 @@ def loop():
 	ultrasonic_radar(30,290)
 
 	function_buttons(480,15)
+
+	scale_FL(30,550,320)
 
 	root.mainloop()
 
