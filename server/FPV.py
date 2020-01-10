@@ -33,14 +33,14 @@ pid.SetKd(0)
 pid.SetKi(0)
 Y_lock = 0
 X_lock = 0
-tor	= 17
+tor	= 10
 FindColorMode = 0
 WatchDogMode  = 0
 UltraData = 3
 LED  = LED.LED()
 
-CVrun = 0
-speed_set = 80
+CVrun = 1
+speed_set = 90
 back_R = 0.4
 forward_R = 0.6
 
@@ -51,6 +51,9 @@ lineColorSet = 255
 frameRender = 1
 findLineError = 20
 
+colorUpper = np.array([44, 255, 255])#1
+colorLower = np.array([24, 100, 100])#1
+
 def findLineCtrl(posInput, setCenter):
 	if posInput:
 		if posInput > (setCenter + findLineError):
@@ -59,26 +62,24 @@ def findLineCtrl(posInput, setCenter):
 			error = (posInput-320)/5
 			outv = int(round((pid.GenOut(error)),0))
 			servo.lookright(outv)
-			servo.turnRight(coe_Genout(error, 64))
+			# servo.turnRight(coe_Genout(error, 64))
+			servo.turnRight()
 			X_lock = 0
-			pass
 		elif posInput < (setCenter - findLineError):
 			move.motorStop()
 			#turnLeft
 			error = (320-posInput)/5
 			outv = int(round((pid.GenOut(error)),0))
 			servo.lookleft(outv)
-			servo.turnLeft(coe_Genout(error, 64))
-			pass
+			# servo.turnLeft(coe_Genout(error, 64))
+			servo.turnLeft()
 		else:
 			if CVrun:
 				move.move(speed_set, 'forward')
 			#forward
-			pass
 	else:
 		if CVrun:
 			move.move(speed_set, 'backward')
-		pass
 
 
 def cvFindLine():
@@ -168,12 +169,30 @@ class FPV:
 		self.frame_num = 0
 		self.fps = 0
 
-		self.colorUpper = (44, 255, 255)
-		self.colorLower = (24, 100, 100)
-
-
 	def SetIP(self,invar):
 		self.IP = invar
+
+	def colorFindSet(self,invarH, invarS, invarV):#1
+		global colorUpper,colorLower
+		HUE_1 = invarH+11
+		HUE_2 = invarH-11
+		if HUE_1>255:HUE_1=255
+		if HUE_2<0:HUE_2=0
+
+		SAT_1 = invarS+170
+		SAT_2 = invarS-20
+		if SAT_1>255:SAT_1=255
+		if SAT_2<0:SAT_2=0
+		
+		VAL_1 = invarV+170
+		VAL_2 = invarV-20
+		if VAL_1>255:VAL_1=255
+		if VAL_2<0:VAL_2=0
+    
+		colorUpper = np.array([HUE_1, SAT_1, VAL_1])
+		colorLower = np.array([HUE_2, SAT_2, VAL_2])
+		print('HSV_1:%d %d %d'%(HUE_1, SAT_1, VAL_1))
+		print('HSV_2:%d %d %d'%(HUE_2, SAT_2, VAL_2))
 
 
 	def FindColor(self,invar):
@@ -193,8 +212,21 @@ class FPV:
 		UltraData = invar
 
 
+	def setExpCom(self,invar):#Z
+		if invar > 25:
+			invar = 25
+		elif invar < -25:
+			invar = -25
+		else:
+			camera.exposure_compensation = invar
+
+
+	def defaultExpCom(self):#Z
+		camera.exposure_compensation = 0
+
+
 	def capture_thread(self,IPinver):
-		global frame_image
+		global frame_image, camera
 		ap = argparse.ArgumentParser()			#OpenCV initialization
 		ap.add_argument("-b", "--buffer", type=int, default=64,
 			help="max buffer size")
@@ -224,7 +256,7 @@ class FPV:
 			if FindColorMode:
 				####>>>OpenCV Start<<<####
 				hsv = cv2.cvtColor(frame_image, cv2.COLOR_BGR2HSV)
-				mask = cv2.inRange(hsv, self.colorLower, self.colorUpper)
+				mask = cv2.inRange(hsv, colorLower, colorUpper)#1
 				mask = cv2.erode(mask, None, iterations=2)
 				mask = cv2.dilate(mask, None, iterations=2)
 				cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,

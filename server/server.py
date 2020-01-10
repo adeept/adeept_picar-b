@@ -593,6 +593,20 @@ def run():
 			except:
 				pass
 
+		elif 'FCSET' in data:
+				FCSET = data.split()
+				fpv.colorFindSet(int(FCSET[1]), int(FCSET[2]), int(FCSET[3]))
+
+		elif 'setEC' in data:#Z
+			ECset = data.split()
+			try:
+				fpv.setExpCom(int(ECset[1]))
+			except:
+				pass
+
+		elif 'defEC' in data:#Z
+			fpv.defaultExpCom()
+
 		elif 'police' in data:
 			if LED.ledfunc != 'police':
 				tcpCliSock.send(('rainbow_off').encode())
