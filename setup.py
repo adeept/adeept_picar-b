@@ -1,9 +1,7 @@
 #!/usr/bin/python3
 # File name   : setup.py
-# Website     : www.gewbot.com
-# E-mail      : gewubot@163.com
-# Author      : William
-# Date        : 2019/09/02
+# Author      : Adeept
+# Date        : 2020/3/14
 
 import os
 import time
