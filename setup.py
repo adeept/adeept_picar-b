@@ -1,13 +1,15 @@
 #!/usr/bin/python3
 # File name   : setup.py
-# Description : Software Setup
-# Website     : www.adeept.com
+# Website     : www.gewbot.com
+# E-mail      : gewubot@163.com
 # Author      : William
-# Date        : 2019/11/21
+# Date        : 2019/09/02
 
 import os
 import time
-import sys
+
+curpath = os.path.realpath(__file__)
+thisPath = "/" + os.path.dirname(curpath)
 
 def replace_num(file,initial,new_num):  
     newline=""
@@ -24,14 +26,26 @@ for x in range(1,4):
 	if os.system("sudo apt-get update") == 0:
 		break
 
-# os.system("sudo apt-get purge -y wolfram-engine")
-# os.system("sudo apt-get purge -y libreoffice*")
-# os.system("sudo apt-get -y clean")
-# os.system("sudo apt-get -y autoremove")
+os.system("sudo apt-get purge -y wolfram-engine")
+os.system("sudo apt-get purge -y libreoffice*")
+os.system("sudo apt-get -y clean")
+os.system("sudo apt-get -y autoremove")
 
 # for x in range(1,4):
 # 	if os.system("sudo apt-get -y upgrade") == 0:
 # 		break
+
+for x in range(1,4):
+	if os.system("sudo pip3 install -U pip") == 0:
+		break
+
+for x in range(1,4):
+	if os.system("sudo apt-get install -y python-dev python-pip libfreetype6-dev libjpeg-dev build-essential") == 0:
+		break
+
+for x in range(1,4):
+	if os.system("sudo -H pip3 install --upgrade luma.oled") == 0:
+		break
 
 for x in range(1,4):
 	if os.system("sudo apt-get install -y i2c-tools") == 0:
@@ -44,76 +58,6 @@ for x in range(1,4):
 for x in range(1,4):
 	if os.system("sudo pip3 install rpi_ws281x") == 0:
 		break
-
-##########SR###########
-for x in range(1,4):
-	if os.system("sudo apt-get install pulseaudio pulseaudio-utils libpulse-dev libpulse-java libpulse0") == 0:
-		break
-
-for x in range(1,4):
-	if os.system("sudo apt-get install -y bison libasound2-dev swig") == 0:
-		break
-
-for x in range(1,4):
-	if os.system("sudo apt-get install -y pulseaudio libpulse-dev") == 0:
-		break
-
-for x in range(1,4):
-	if os.system("sudo apt-get install -y portaudio19-dev python3-all-dev python3-pyaudio") == 0:
-		break
-
-for x in range(1,4):
-	if os.system("sudo apt-get install -qq python3 python3-dev python3-pip build-essential swig libpulse-dev") == 0:
-		break
-
-for x in range(1,4):
-	if os.system("sudo apt-get install -y gcc libffi-dev libssl-dev python3-dev") == 0:
-		break
-
-for x in range(1,4):
-	if os.system("sudo pip3 install pyaudio") == 0:
-		break
-
-for x in range(1,4):
-	if os.system("sudo apt-get install -y flac") == 0:
-		break
-
-for x in range(1,4):
-	if os.system("sudo wget https://sourceforge.net/projects/cmusphinx/files/sphinxbase/5prealpha/sphinxbase-5prealpha.tar.gz/download -O sphinxbase.tar.gz") == 0:
-		break
-
-for x in range(1,4):
-	if os.system("sudo wget https://sourceforge.net/projects/cmusphinx/files/pocketsphinx/5prealpha/pocketsphinx-5prealpha.tar.gz/download -O pocketsphinx.tar.gz") == 0:
-		break
-
-for x in range(1,4):
-	if os.system("sudo tar -xzvf sphinxbase.tar.gz") == 0:
-		break
-
-for x in range(1,4):
-	if os.system("sudo tar -xzvf pocketsphinx.tar.gz") == 0:
-		break
-
-try:
-	os.system("cd sphinxbase-5prealpha/ && ./configure -enable-fixed && make && sudo make install")
-except:
-	pass
-
-try:
-	os.system("cd pocketsphinx-5prealpha/ && ./configure && make && sudo make install")
-except:
-	pass
-
-try:
-	os.system("sudo pip3 install pocketsphinx")
-except:
-	pass
-
-try:
-	os.system("sudo pip3 install SpeechRecognition")
-except:
-	pass
-##########SR###########
 
 for x in range(1,4):
 	if os.system("sudo apt-get install -y python3-smbus") == 0:
@@ -128,16 +72,17 @@ try:
 except:
 	print('try again')
 
-for x in range(1,4):
-	if os.system("sudo pip3 install -U pip") == 0:
-		break
 
 for x in range(1,4):
 	if os.system("sudo pip3 install numpy") == 0:
 		break
 
 for x in range(1,4):
-	if os.system("sudo apt-get install -y libopencv-dev python3-opencv") == 0:
+	if os.system("pip3 install opencv-contrib-python==3.4.3.18") == 0:
+		break
+
+for x in range(1,4):
+	if os.system("sudo apt-get -y install libqtgui4 libhdf5-dev libhdf5-serial-dev libatlas-base-dev libjasper-dev libqt4-test") == 0:
 		break
 
 for x in range(1,4):
@@ -149,7 +94,7 @@ for x in range(1,4):
 		break
 
 try:
-	os.system("cd //home/pi/gwr/create_ap && sudo make install")
+	os.system("cd " + thisPath + "/create_ap && sudo make install")
 except:
 	pass
 
@@ -163,14 +108,9 @@ for x in range(1,4):
 		break
 
 try:
-	os.system('sudo rm //home/pi/startup.sh')
-except:
-	pass
-
-try:
 	os.system('sudo touch //home/pi/startup.sh')
 	with open("//home/pi/startup.sh",'w') as file_to_write:
-		file_to_write.write("#!/bin/sh\nsudo python3 /%s/server/server.py"%sys.path[0])
+		file_to_write.write("#!/bin/sh\nsudo python3 " + thisPath + "/server/server.py")
 except:
 	pass
 
@@ -185,6 +125,6 @@ try: #fix conflict with onboard Raspberry Pi audio
 except:
 	pass
 
-print('restarting')
-
+print('The program in Raspberry Pi has been installed, disconnected and restarted. \nYou can now power off the Raspberry Pi to install the camera and driver board (Robot HAT). \nAfter turning on again, the Raspberry Pi will automatically run the program to set the servos port signal to turn the servos to the middle position, which is convenient for mechanical assembly.')
+print('restarting...')
 os.system("sudo reboot")
