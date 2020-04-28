@@ -9,14 +9,14 @@ servo.servo_init()
 import socket
 import time
 import threading
-import move
+import GUImove as move
 import Adafruit_PCA9685
 import os
 import FPV
 import info
 
 import LED
-import findline
+import GUIfindline as findline
 import switch
 import ultra
 import PID

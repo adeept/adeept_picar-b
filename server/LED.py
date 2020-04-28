@@ -10,9 +10,9 @@ import argparse
 import threading
 
 # LED strip configuration:
-LED_COUNT      = 3       # Number of LED pixels.
+LED_COUNT      = 12      # Number of LED pixels.
 LED_PIN        = 12      # GPIO pin connected to the pixels (18 uses PWM!).
-#LED_PIN        = 10     # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
+#LED_PIN        = 10      # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
 LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
 LED_DMA        = 10      # DMA channel to use for generating signal (try 10)
 LED_BRIGHTNESS = 255     # Set to 0 for darkest and 255 for brightest
@@ -20,7 +20,6 @@ LED_INVERT     = False   # True to invert the signal (when using NPN transistor 
 LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
 
 ledfunc = ''
-
 
 def wheel(pos):
     """Generate rainbow colors across 0-255 positions."""
@@ -32,7 +31,6 @@ def wheel(pos):
     else:
         pos -= 170
         return Color(0, pos * 3, 255 - pos * 3)
-
 
 class LED:
     def __init__(self):
@@ -73,7 +71,7 @@ class LED:
                 time.sleep(wait_ms / 1000.0)
             else:
                 break
-
+    
     def SideAWipe(self, R, G, B):
         """Wipe color across display a pixel at a time."""
         color = Color(R,G,B)
@@ -89,7 +87,6 @@ class LED:
             self.strip.show()
 
 
-led = LED()
 class LED_ctrl(threading.Thread):
     def __init__(self, *args, **kwargs):
         super(LED_ctrl, self).__init__(*args, **kwargs)
@@ -155,19 +152,7 @@ class LED_ctrl(threading.Thread):
         self.__flag.set()
         self.__running.clear()
 
-
+led = LED()
 if __name__ == '__main__':
     led = LED()
-    # ledthread = LED_ctrl()
-    # ledthread.start()
-    # for i in range(0,10):
-    #     led.rainbow()
     led.colorWipe(255,255,255)
-    time.sleep(1)
-
-    # ledfunc = 'police'
-    # ledthread.resume()
-
-    # time.sleep(2)
-    # ledfunc = ''
-    # ledthread.pause()

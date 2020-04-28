@@ -42,6 +42,64 @@ for x in range(1,4):
 		break
 
 for x in range(1,4):
+	if os.system("sudo apt-get install -y swig") == 0:
+		break
+
+for x in range(1,4):
+	if os.system("sudo apt-get install -y portaudio19-dev python3-all-dev python3-pyaudio") == 0:
+		break
+
+for x in range(1,4):
+	if os.system("sudo pip3 install pyaudio") == 0:
+		break
+
+for x in range(1,4):
+	if os.system("sudo apt-get install -y flac") == 0:
+		break
+
+for x in range(1,4):
+	if os.system("sudo wget https://sourceforge.net/projects/cmusphinx/files/sphinxbase/5prealpha/sphinxbase-5prealpha.tar.gz/download -O sphinxbase.tar.gz") == 0:
+		break
+
+for x in range(1,4):
+	if os.system("sudo wget https://sourceforge.net/projects/cmusphinx/files/pocketsphinx/5prealpha/pocketsphinx-5prealpha.tar.gz/download -O pocketsphinx.tar.gz") == 0:
+		break
+
+for x in range(1,4):
+	if os.system("sudo tar -xzvf sphinxbase.tar.gz") == 0:
+		break
+
+for x in range(1,4):
+	if os.system("sudo tar -xzvf pocketsphinx.tar.gz") == 0:
+		break
+
+try:
+	os.system("cd sphinxbase-5prealpha/ && ./configure -enable-fixed && make && sudo make install")
+	os.system("sudo pip3 install pocketsphinx")
+except:
+	pass
+
+try:
+	os.system("cd pocketsphinx-5prealpha/ && ./configure && make && sudo make install")
+	os.system("sudo pip3 install SpeechRecognition")
+except:
+	pass
+
+try:
+	os.system("sudo pip3 install pocketsphinx")
+except:
+	pass
+
+try:
+	os.system("sudo pip3 install SpeechRecognition")
+except:
+	pass
+
+for x in range(1,4):
+	if os.system("sudo apt-get install -y bison libasound2-dev swig") == 0:
+		break
+
+for x in range(1,4):
 	if os.system("sudo -H pip3 install --upgrade luma.oled") == 0:
 		break
 
@@ -63,6 +121,22 @@ for x in range(1,4):
 
 for x in range(1,4):
 	if os.system("sudo pip3 install mpu6050-raspberrypi") == 0:
+		break
+
+for x in range(1,4):
+	if os.system("sudo pip3 install flask") == 0:
+		break
+
+for x in range(1,4):
+	if os.system("sudo pip3 install flask") == 0:
+		break
+
+for x in range(1,4):
+	if os.system("sudo pip3 install flask_cors") == 0:
+		break
+
+for x in range(1,4):
+	if os.system("sudo pip3 install websockets") == 0:
 		break
 
 try:
@@ -108,6 +182,8 @@ for x in range(1,4):
 try:
 	os.system('sudo touch //home/pi/startup.sh')
 	with open("//home/pi/startup.sh",'w') as file_to_write:
+		#you can choose how to control the robot
+		#file_to_write.write("#!/bin/sh\nsudo python3 " + thisPath + "/server/webServer.py")
 		file_to_write.write("#!/bin/sh\nsudo python3 " + thisPath + "/server/server.py")
 except:
 	pass

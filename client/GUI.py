@@ -974,7 +974,7 @@ def function_buttons(x,y):
 	Btn_function_3.place(x=x,y=y+70)
 	Btn_function_4.place(x=x,y=y+105)
 	Btn_function_5.place(x=x,y=y+140)
-	Btn_function_6.place(x=x,y=y+175)
+	# Btn_function_6.place(x=x,y=y+175)
 	Btn_function_7.place(x=x,y=y+215)
 
 	Btn_function_1.bind('<ButtonPress-1>', call_function_1)
@@ -982,7 +982,7 @@ def function_buttons(x,y):
 	Btn_function_3.bind('<ButtonPress-1>', call_function_3)
 	Btn_function_4.bind('<ButtonPress-1>', call_function_4)
 	Btn_function_5.bind('<ButtonPress-1>', call_function_5)
-	Btn_function_6.bind('<ButtonPress-1>', call_function_6)
+	# Btn_function_6.bind('<ButtonPress-1>', call_function_6)
 	Btn_function_7.bind('<ButtonPress-1>', call_function_7)
 
 

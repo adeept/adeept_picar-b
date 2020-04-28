@@ -22,7 +22,7 @@ import PID
 import LED
 import datetime
 from rpi_ws281x import *
-import move
+import GUImove as move
 import switch
 import ultra
 import numpy as np
