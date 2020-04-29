@@ -20,7 +20,6 @@ import GUIfindline as findline
 import switch
 import ultra
 import PID
-from mpu6050 import mpu6050
 
 import random
 
@@ -49,12 +48,6 @@ if appConnection:
 
 
 MPU_connection = 1
-try:
-	sensor = mpu6050(0x68)
-	print('mpu6050 connected.')
-except:
-	MPU_connection = 0
-	print('mpu6050 disconnected.')
 
 servo_speed  = 5
 functionMode = 0
