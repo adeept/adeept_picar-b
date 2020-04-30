@@ -9,6 +9,7 @@ import speech_recognition as sr
 import move
 import RPIservo
 import robotLight
+import time
 
 scGear = RPIservo.ServoCtrl()
 scGear.moveInit()
@@ -61,21 +62,21 @@ def run():
         move.motor_left(1, 0, speed_set)
         move.motor_right(1, 0, speed_set)
         time.sleep(2)
-        motor.motorStop()
+        move.motorStop()
 
     elif 'backward' in v_command:
         scGear.moveAngle(2, 0)
         move.motor_left(1, 1, speed_set)
         move.motor_right(1, 1, speed_set)
         time.sleep(2)
-        motor.motorStop()
+        move.motorStop()
 
     elif 'left' in v_command:
         scGear.moveAngle(2, 45)
         move.motor_left(1, 0, speed_set)
         move.motor_right(1, 0, speed_set)
         time.sleep(2)
-        motor.motorStop()
+        move.motorStop()
         scGear.moveAngle(2, 0)
 
     elif "right" in v_command:
@@ -83,11 +84,11 @@ def run():
         move.motor_left(1, 0, speed_set)
         move.motor_right(1, 0, speed_set)
         time.sleep(2)
-        motor.motorStop()
+        move.motorStop()
         scGear.moveAngle(2, 0)
 
     elif 'stop' in v_command:
-        motor.motorStop()
+        move.motorStop()
 
     else:
         pass
