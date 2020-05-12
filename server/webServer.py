@@ -350,11 +350,11 @@ def update_code():
 		if not config['production']:
 			print('Update code')
 			# Force overwriting local code
-			os.system(f'cd {projectPath} && sudo git fetch --all && git reset --hard origin/master && git pull')
-			config['production'] = True
-			with open(f'{projectPath}/config.json', 'w') as f2:
-				json.dump(config, f2)
-		
+			if os.system(f'cd {projectPath} && sudo git fetch --all && sudo git reset --hard origin/master && sudo git pull') == 0:
+				print('Update successfully')
+				print('Restarting...')
+				os.system('sudo reboot')
+			
 def wifi_check():
 	try:
 		s =socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
