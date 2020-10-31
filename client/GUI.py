@@ -600,8 +600,8 @@ def connent_input(x,y):
 	l_ip_3=tk.Label(root,width=10,text='IP Address:',fg=color_text,bg='#000000')
 	l_ip_3.place(x=x,y=y)						 #Define a Label and put it in position
 
-	Btn14= tk.Button(root, width=8,height=2, text='Connect',fg=color_text,bg=color_btn,relief='ridge')
-	Btn14.place(x=x+130,y=y)						  #Define a Button and put it in position
+	Btn14= tk.Button(root, width=8,height=1, text='Connect',fg=color_text,bg=color_btn,relief='ridge')
+	Btn14.place(x=x+5,y=y+50)						  #Define a Button and put it in position
 
 	root.bind('<Return>', connect)
 	Btn14.bind('<ButtonPress-1>', connect)
@@ -990,7 +990,7 @@ def loop():
 	global root, var_Speed, var_R_L, var_G_L, var_B_L, var_0, var_1, var_2, var_lip1, var_lip2, var_err, var_R, var_G, var_B, var_ec
 	root = tk.Tk()			
 	root.title('PiCar-B v2.0 GUI')	  
-	root.geometry('565x850')  
+	root.geometry('700x900')  
 	root.config(bg=color_bg)  
 
 	var_Speed = tk.StringVar()
