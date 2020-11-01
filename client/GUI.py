@@ -386,9 +386,9 @@ def socket_connect():	 #Call this function to connect with the server
 			info_threading.setDaemon(True)							 #'True' means it is a front thread,it would close when the mainloop() closes
 			info_threading.start()									 #Thread starts
 
-			video_threading=thread.Thread(target=opencv_r)		 #Define a thread for FPV and OpenCV
-			video_threading.setDaemon(True)							 #'True' means it is a front thread,it would close when the mainloop() closes
-			video_threading.start()									 #Thread starts
+			#video_threading=thread.Thread(target=opencv_r)		 #Define a thread for FPV and OpenCV
+			#video_threading.setDaemon(True)							 #'True' means it is a front thread,it would close when the mainloop() closes
+			#video_threading.start()									 #Thread starts
 
 			break
 		else:
