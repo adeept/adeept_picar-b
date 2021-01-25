@@ -204,16 +204,10 @@ def get_direction():
 
 
 if __name__ == '__main__':
-	print('%s/servo.py'%sys.path[0])
-	# radar_scan()
-	# turnRight()
-	# time.sleep(1)
-	# turnLeft()
-	# time.sleep(1)
-	# turnMiddle()
-	# pwm.set_pwm(0, 0, 370)
-	# for i in range(0,100):
-	# 	up(1)
-	# 	time.sleep(0.1)
-	# 	print('1')
-	pass
+	while 1:
+		for i in range(0,100):
+			pwm.set_pwm(0, 0, (300+i))
+			time.sleep(0.05)
+		for i in range(0,100):
+			pwm.set_pwm(0, 0, (400-i))
+			time.sleep(0.05)
