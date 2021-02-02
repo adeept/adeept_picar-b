@@ -97,7 +97,7 @@ def FPV_thread():
 
 
 def ap_thread():
-	os.system("sudo create_ap wlan0 eth0 Groovy 12345678")
+	os.system("sudo create_ap wlan0 eth0 Adeept_Robot 12345678")
 
 
 def functionSelect(command_input, response):
@@ -238,13 +238,13 @@ def robotCtrl(command_input, response):
 
 	elif 'left' == command_input:
 		turn_command = 'left'
-		scGear.moveAngle(2, 45)
+		scGear.moveAngle(2, 30)
 		RL.both_off()
 		RL.turnLeft()
 
 	elif 'right' == command_input:
 		turn_command = 'right'
-		scGear.moveAngle(2,-45)
+		scGear.moveAngle(2,-30)
 		RL.both_off()
 		RL.turnRight()
 
