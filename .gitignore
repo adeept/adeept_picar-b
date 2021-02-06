@@ -1,3 +1,7 @@
 
 .python-version
 *.pyc
+pocketsphinx-5prealpha/
+sphinxbase-5prealpha/
+pocketsphinx.tar.gz
+sphinxbase.tar.gz
