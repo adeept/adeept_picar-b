@@ -429,6 +429,8 @@ class Camera(BaseCamera):
     @staticmethod
     def frames():
         camera = cv2.VideoCapture(Camera.video_source)
+        camera.release()
+        camera = cv2.VideoCapture(Camera.video_source)
         if not camera.isOpened():
             raise RuntimeError('Could not start camera.')
 
@@ -456,4 +458,5 @@ class Camera(BaseCamera):
 
 
             # encode as a jpeg image and return it
-            yield cv2.imencode('.jpg', img)[1].tobytes()
+            if cv2.imencode('.jpg', img)[0]:
+                yield cv2.imencode('.jpg', img)[1].tobytes()
