@@ -13,6 +13,7 @@ import LED
 import move
 import servo
 import switch
+import RPIservo
 servo.servo_init()
 switch.switchSetup()
 switch.set_all_switch_off()
@@ -34,6 +35,13 @@ servo_speed  = 5
 
 ledthread = LED.LED_ctrl()
 ledthread.start()
+
+scGear = RPIservo.ServoCtrl()
+scGear.moveInit()
+P_sc = RPIservo.ServoCtrl()
+P_sc.start()
+T_sc = RPIservo.ServoCtrl()
+T_sc.start()
 
 class Servo_ctrl(threading.Thread):
     def __init__(self, *args, **kwargs):
@@ -88,21 +96,29 @@ def app_ctrl():
         global direction_command, turn_command, servo_command
         if data_input == 'forwardStart\n':
             direction_command = 'forward'
-            move.move(speed_set, direction_command)
+            move.motor_left(1, 0, speed_set)
+            move.motor_right(1, 0, speed_set)
+		    # RL.both_on()
 
         elif data_input == 'backwardStart\n':
             direction_command = 'backward'
-            move.move(speed_set, direction_command)
+            move.motor_left(1, 1, speed_set)
+            move.motor_right(1, 1, speed_set)
+            # RL.red()
 
         elif data_input == 'leftStart\n':
             turn_command = 'left'
-            servo.turnLeft()
-            move.move(speed_set, direction_command)
-
+            scGear.moveAngle(2,30)
+            move.motor_left(1, 0, speed_set)
+            move.motor_right(1, 0, speed_set)
+            
         elif data_input == 'rightStart\n':
             turn_command = 'right'
-            servo.turnRight()
-            move.move(speed_set, direction_command)
+            scGear.moveAngle(2,-30)
+            move.motor_left(1, 0, speed_set)
+            move.motor_right(1, 0, speed_set)
+            # RL.both_off()
+            # RL.turnRight()
 
         elif 'forwardStop' in data_input:
             if turn_command == 'no':
@@ -114,42 +130,38 @@ def app_ctrl():
 
         elif 'leftStop' in data_input:
             turn_command = 'no'
-            servo.turnMiddle()
+            # servo.turnMiddle()
+            # move.motorStop()
+            scGear.moveAngle(2, 0)
             move.motorStop()
 
         elif 'rightStop' in data_input:
             turn_command = 'no'
-            servo.turnMiddle()
+            # servo.turnMiddle()
+            # move.motorStop()
+            scGear.moveAngle(2, 0)
             move.motorStop()
 
         if data_input == 'lookLeftStart\n':
-            servo_command = 'lookleft'
-            servo_move.resume()
+            P_sc.singleServo(1, 1, 7)
 
         elif data_input == 'lookRightStart\n': 
-            servo_command = 'lookright'
-            servo_move.resume()
+            P_sc.singleServo(1,-1, 7)
 
         elif data_input == 'downStart\n':
-            servo_command = 'down'
-            servo_move.resume()
+            T_sc.singleServo(0,-1, 7)
 
         elif data_input == 'upStart\n':
-            servo_command = 'up'
-            servo_move.resume()
+            T_sc.singleServo(0, 1, 7)
 
         elif 'lookLeftStop' in data_input:
-            servo_move.pause()
-            servo_command = 'no'
+            P_sc.stopWiggle()
         elif 'lookRightStop' in data_input:
-            servo_move.pause()
-            servo_command = 'no'
+            P_sc.stopWiggle()
         elif 'downStop' in data_input:
-            servo_move.pause()
-            servo_command = 'no'
+            T_sc.stopWiggle()
         elif 'upStop' in data_input:
-            servo_move.pause()
-            servo_command = 'no'
+            T_sc.stopWiggle()
 
 
         if data_input == 'aStart\n':
