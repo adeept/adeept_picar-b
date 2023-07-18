@@ -179,19 +179,20 @@ class Functions(threading.Thread):
 		status_left = GPIO.input(line_pin_left)
 		#print('R%d   M%d   L%d'%(status_right,status_middle,status_left))
 		if status_middle == 0:
+			scGear.moveAngle(2, 0)
 			move.motor_left(1, 0, 80)
 			move.motor_right(1, 0, 80)
 		elif status_left == 0:
-			scGear.moveAngle(2, 45)
+			scGear.moveAngle(2, 30)
 			move.motor_left(1, 0, 80)
 			move.motor_right(1, 0, 80)
 		elif status_right == 0:
-			scGear.moveAngle(2,-45)
+			scGear.moveAngle(2,-30)
 			move.motor_left(1, 0, 80)
 			move.motor_right(1, 0, 80)
 		else:
-			move.motor_left(1, 1, 80)
-			move.motor_right(1, 1, 80)
+			move.motor_left(1, 1, 0)
+			move.motor_right(1, 1, 0)
 		print(status_left,status_middle,status_right)
 		time.sleep(0.1)
 
