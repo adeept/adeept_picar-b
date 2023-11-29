@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 # File name   : setup.py
 # Author      : Adeept
-# Date        : 2020/3/14
 
 import os
 import time
@@ -46,54 +45,8 @@ for x in range(1,4):
 		break
 
 for x in range(1,4):
-	if os.system("sudo apt-get install -y portaudio19-dev python3-all-dev python3-pyaudio") == 0:
-		break
-
-for x in range(1,4):
-	if os.system("sudo pip3 install pyaudio") == 0:
-		break
-
-for x in range(1,4):
 	if os.system("sudo apt-get install -y flac") == 0:
 		break
-
-for x in range(1,4):
-	if os.system("sudo wget https://sourceforge.net/projects/cmusphinx/files/sphinxbase/5prealpha/sphinxbase-5prealpha.tar.gz/download -O sphinxbase.tar.gz") == 0:
-		break
-
-for x in range(1,4):
-	if os.system("sudo wget https://sourceforge.net/projects/cmusphinx/files/pocketsphinx/5prealpha/pocketsphinx-5prealpha.tar.gz/download -O pocketsphinx.tar.gz") == 0:
-		break
-
-for x in range(1,4):
-	if os.system("sudo tar -xzvf sphinxbase.tar.gz") == 0:
-		break
-
-for x in range(1,4):
-	if os.system("sudo tar -xzvf pocketsphinx.tar.gz") == 0:
-		break
-
-try:
-	os.system("cd sphinxbase-5prealpha/ && ./configure -enable-fixed && make && sudo make install")
-	os.system("sudo pip3 install pocketsphinx")
-except:
-	pass
-
-try:
-	os.system("cd pocketsphinx-5prealpha/ && ./configure && make && sudo make install")
-	os.system("sudo pip3 install SpeechRecognition")
-except:
-	pass
-
-try:
-	os.system("sudo pip3 install pocketsphinx")
-except:
-	pass
-
-try:
-	os.system("sudo pip3 install SpeechRecognition")
-except:
-	pass
 
 for x in range(1,4):
 	if os.system("sudo apt-get install -y bison libasound2-dev swig") == 0:
@@ -105,6 +58,10 @@ for x in range(1,4):
 
 for x in range(1,4):
 	if os.system("sudo apt-get install -y i2c-tools") == 0:
+		break
+
+for x in range(1,4):
+	if os.system("sudo apt-get install -y python3-opencv") == 0:
 		break
 
 for x in range(1,4):
@@ -149,9 +106,6 @@ for x in range(1,4):
 	if os.system("sudo pip3 install numpy") == 0:
 		break
 
-for x in range(1,4):
-	if os.system("sudo pip3 install opencv-contrib-python==3.4.3.18") == 0:
-		break
 
 for x in range(1,4):
 	if os.system("sudo apt-get -y install libqtgui4 libhdf5-dev libhdf5-serial-dev libatlas-base-dev libjasper-dev libqt4-test") == 0:
