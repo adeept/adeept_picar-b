@@ -13,7 +13,7 @@ import json
 import ultra
 import Kalman_filter
 import move
-import speech
+# import speech
 import RPIservo
 
 scGear = RPIservo.ServoCtrl()
@@ -168,9 +168,9 @@ class Functions(threading.Thread):
 		self.resume()
 
 
-	def speech(self):
-		self.functionMode = 'speechRecProcessing'
-		self.resume()
+	# def speech(self):
+	# 	self.functionMode = 'speechRecProcessing'
+	# 	self.resume()
 
 
 	def trackLineProcessing(self):
@@ -313,9 +313,9 @@ class Functions(threading.Thread):
 		time.sleep(0.05)
 
 
-	def speechRecProcessing(self):
-		print('speechRecProcessing')
-		speech.run()
+	# def speechRecProcessing(self):
+	# 	print('speechRecProcessing')
+	# 	speech.run()
 
 
 	def keepDisProcessing(self):
@@ -340,8 +340,8 @@ class Functions(threading.Thread):
 			self.steadyProcessing()
 		elif self.functionMode == 'trackLine':
 			self.trackLineProcessing()
-		elif self.functionMode == 'speechRecProcessing':
-			self.speechRecProcessing()
+		# elif self.functionMode == 'speechRecProcessing':
+		# 	self.speechRecProcessing()
 		elif self.functionMode == 'keepDistance':
 			self.keepDisProcessing()
 
